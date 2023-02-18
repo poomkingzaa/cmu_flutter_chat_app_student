@@ -26,6 +26,15 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   void checkSignedIn() async {
+    AuthProvider authProvider = context.read<AuthProvider>();
+    final String displayName = await authProvider.getUserDisplayName();
+    var isSignIn = await authProvider.isLoggedIn();
+
+    if (isSignIn) {
+        openHome("Hello");
+    } else{
+        openLogin();
+    }
     /** TODO: Check if login via Google SignIn
      * 
      * check isLoggedIn from authProvider services
@@ -33,11 +42,10 @@ class _SplashPageState extends State<SplashPage> {
      * AuthProvider authProvider = context.read<AuthProvider>();
      * 
      * if isSignIn = true => openHome(displayName);
-     *   hint: final String displayName = await authProvider.getUserDisplayName();
+    //  *   hint: final String displayName = await authProvider.getUserDisplayName();
      * 
      * else => openLogin();
      */
-    openLogin();
   }
 
   openLogin() => Navigator.pushReplacement(
